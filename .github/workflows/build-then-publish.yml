@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Fetch unshallow
-      uses: git fetch --prune --tags --unshallow
+      run: git fetch --prune --tags --unshallow
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
