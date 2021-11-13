@@ -12,17 +12,10 @@
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <IncludeSymbols>false</IncludeSymbols>
     <NoPackageAnalysis>true</NoPackageAnalysis>
-    
+
     <!-- Allows files beginning with a dot -->
     <NoDefaultExcludes>true</NoDefaultExcludes>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="GitVersion.MsBuild" Version="5.7.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
 
   <!-- Compose the .editorconfig file from the templates -->
   <Target Name="CreateEditorConfig" BeforeTargets="BeforeBuild">
