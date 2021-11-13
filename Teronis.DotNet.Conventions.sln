@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Teronis.DotNet.EditorConfig.Base", "src\Teronis.DotNet.EditorConfig.Base\Teronis.DotNet.EditorConfig.Base.csproj", "{624FBEB2-024E-43DA-9FEB-E349A5F5D636}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{91678690-1CA3-4E32-BD64-719C8B5DA5CF}"
+	ProjectSection(SolutionItems) = preProject
+		res\editorconfig\editorconfig.props = res\editorconfig\editorconfig.props
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{624FBEB2-024E-43DA-9FEB-E349A5F5D636}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{624FBEB2-024E-43DA-9FEB-E349A5F5D636}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{624FBEB2-024E-43DA-9FEB-E349A5F5D636}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{624FBEB2-024E-43DA-9FEB-E349A5F5D636}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9C4C077C-BB95-4EB2-9932-ECAA390D127F}
+	EndGlobalSection
+EndGlobal

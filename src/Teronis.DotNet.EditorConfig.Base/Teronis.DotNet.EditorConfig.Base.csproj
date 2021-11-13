@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>Distributes a base .editorconfig file.</Description>
+    <PackageTags>editorconfig, analyzer</PackageTags>
+
+    <!-- We don't build an executable package. 
+         We build an only-build-time package. -->
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    <DevelopmentDependency>true</DevelopmentDependency>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <IncludeSymbols>false</IncludeSymbols>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
+  </PropertyGroup>
+
+  <!-- Compose the .editorconfig file from the templates -->
+  <Target Name="CreateEditorConfig" BeforeTargets="BeforeBuild">
+    <ItemGroup>
+      <EditorConfigFilesToJoin Include="../../res/editorconfig/editorconfig.base" />
+    </ItemGroup>
+    <ItemGroup>
+      <EditorConfigFileContents Include="$([System.IO.File]::ReadAllText(%(EditorConfigFilesToJoin.Identity)))" />
+    </ItemGroup>
+    <WriteLinesToFile File="rules\.editorconfig" Lines="@(EditorConfigFileContents)" Overwrite="true" />
+  </Target>
+
+  <!-- Copy the common .props file -->
+  <Target Name="CopyPropsFile" BeforeTargets="BeforeBuild">
+    <Copy SourceFiles="../../res/editorconfig/editorconfig.props" DestinationFiles="build/$(MSBuildProjectName).props" SkipUnchangedFiles="true" UseHardlinksIfPossible="false" />
+  </Target>
+
+  <!-- Select the MSBuild props and composed .editorconfig files to pack -->
+  <ItemGroup>
+    <None Include="build/$(MSBuildProjectName).props" Pack="true" PackagePath="build\" />
+    <Content Include="rules/.editorconfig" Pack="true" PackagePath="content\rules"></Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="GitVersion.MsBuild" Version="5.7.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>
