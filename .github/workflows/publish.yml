@@ -15,5 +15,8 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: nuget-packages
+          path: |
+            src/**/*.nupkg
+            src/**/*.snupkg
       - name: Publish projects
         run: dotnet nuget push "**/*.nupkg;**/*.snupkg" --source 'https://api.nuget.org/v3/index.json' --api-key ${{secrets.NUGET_API_KEY}}
