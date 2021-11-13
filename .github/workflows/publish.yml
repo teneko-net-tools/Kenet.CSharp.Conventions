@@ -14,6 +14,6 @@ jobs:
       - name: Download packages (artifacts)
         uses: actions/download-artifact@v2
         with:
-          name: "nuget-packages"
+          name: nuget-packages
       - name: Publish projects
         run: dotnet nuget push "**/*.nupkg;**/*.snupkg" --source 'https://api.nuget.org/v3/index.json' --api-key ${{secrets.NUGET_API_KEY}}
