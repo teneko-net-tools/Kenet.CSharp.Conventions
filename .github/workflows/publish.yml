@@ -1,0 +1,19 @@
+name: Publish
+
+on:
+  workflow_run:
+    workflows: ["Build & Test & Pack"]
+    branches: [main]
+    types:
+      - completed
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Download packages (artifacts)
+        uses: actions/download-artifact@v2
+        with:
+          name: "nuget-packages"
+      - name: Publish projects
+        run: dotnet nuget push "**/*.nupkg;**/*.snupkg" --source 'https://api.nuget.org/v3/index.json' --api-key ${{secrets.NUGET_API_KEY}}
