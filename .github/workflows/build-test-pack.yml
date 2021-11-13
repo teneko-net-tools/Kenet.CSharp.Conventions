@@ -30,6 +30,5 @@ jobs:
         with:
           name: nuget-packages
           path: |
-            '**/*.nupkg'
-            '**/*.snupkg'
-
+            src/**/*.nupkg
+            src/**/*.snupkg
