@@ -33,6 +33,7 @@ jobs:
             src/**/*.nupkg
             src/**/*.snupkg
   publish:
+    needs: build
     runs-on: windows-latest
     steps:
       - name: Download packages (artifacts)
