@@ -42,8 +42,8 @@ jobs:
         with:
           name: nuget-packages
           path: |
-            src/**/*.nupkg
-            src/**/*.snupkg
+            **/*.nupkg
+            **/*.snupkg
         continue-on-error: true
       - name: Push nupkg's
         id: push-nupkg
