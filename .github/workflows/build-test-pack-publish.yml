@@ -43,12 +43,14 @@ jobs:
           path: |
             src/**/*.nupkg
             src/**/*.snupkg
+        continue-on-error: true
       - name: Push nupkg's
         id: push-nupkg
+        if: success()
         run: echo "::set-output name=CONSOLE::$(dotnet nuget push '**/*.nupkg' --source 'https://api.nuget.org/v3/index.json' --api-key ${{secrets.NUGET_API_KEY}})" --skip-duplicate
         continue-on-error: true
       - name: Push nupkg's suceeded
-        if: "${{ contains(steps.push-nupkg.outputs.CONSOLE, 'error: File does not exist') }}"
+        if: "${{ failure() && !contains(steps.push-nupkg.outputs.CONSOLE, 'error: File does not exist') }}"
         run: exit 1
       - name: Push snupkg's
         id: push-snupkg
@@ -56,5 +58,5 @@ jobs:
         run: echo "::set-output name=CONSOLE::$(dotnet nuget push '**/*.snupkg' --source 'https://api.nuget.org/v3/index.json' --api-key ${{secrets.NUGET_API_KEY}})" --skip-duplicate
         continue-on-error: true
       - name: Push snupkg's suceeded
-        if: "${{ contains(steps.push-nupkg.outputs.CONSOLE, 'error: File does not exist') }}"
+        if: "${{ failure() && !contains(steps.push-nupkg.outputs.CONSOLE, 'error: File does not exist') }}"
         run: exit 1
