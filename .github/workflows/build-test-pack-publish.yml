@@ -47,7 +47,7 @@ jobs:
         continue-on-error: true
       - name: Push nupkg's console output
         if: steps.push-nupkg.outcome != 'skipped'
-        run: echo ${{steps.push-nupkg.outputs.CONSOLE}}
+        run: echo "${{steps.push-nupkg.outputs.CONSOLE}}"
       - name: Push nupkg's suceeded
         if: "${{ steps.push-nupkg.outcome == 'failure' && !contains(steps.push-nupkg.outputs.CONSOLE, 'error: File does not exist') }}"
         run: exit 1
@@ -58,7 +58,7 @@ jobs:
         continue-on-error: true
       - name: Push snupkg's console output
         if: steps.push-snupkg.outcome != 'skipped'
-        run: echo ${{steps.push-snupkg.outputs.CONSOLE}}
+        run: echo "${{steps.push-snupkg.outputs.CONSOLE}}"
       - name: Push snupkg's suceeded
         if: "${{ steps.push-snupkg.outcome == 'failure' && !contains(steps.push-snupkg.outputs.CONSOLE, 'error: File does not exist') }}"
         run: exit 1
