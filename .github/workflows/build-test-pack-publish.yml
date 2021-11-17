@@ -36,7 +36,7 @@ jobs:
     needs: build
     runs-on: windows-latest
     steps:
-      - name: Download packages (artifacts)
+      - name: Download package artifacts
         id: download-artifacts
         uses: actions/download-artifact@v2
         continue-on-error: true
