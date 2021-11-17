@@ -1,10 +1,12 @@
-name: Build & Test & Pack
+name: Build, then publish
 
 on:
   push:
-    branches: [main]
+    branches:
+      - "*"
   pull_request:
-    branches: [main]
+    branches:
+      - "*"
 
 jobs:
   build:
@@ -33,6 +35,9 @@ jobs:
             src/**/*.nupkg
             src/**/*.snupkg
   publish:
+    if: contains('
+      refs/heads/develop
+      refs/heads/main', github.ref)
     needs: build
     runs-on: windows-latest
     steps:
