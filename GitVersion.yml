@@ -2,7 +2,7 @@ mode: ContinuousDeployment
 continuous-delivery-fallback-tag: ''
 next-version: 0.1.0
 branches:
-  master:
+  main:
     increment: Patch
     is-release-branch: true
   develop:
