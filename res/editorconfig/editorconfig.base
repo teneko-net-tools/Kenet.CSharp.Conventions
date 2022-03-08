@@ -1,7 +1,5 @@
 # Add new options at the end of this file
 
-root = true
-
 # All files
 [*]
 indent_style = space
