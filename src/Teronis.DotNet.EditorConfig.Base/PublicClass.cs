@@ -10,6 +10,8 @@
     /// <typeparam name="TSomething"></typeparam>
     public class PublicClass<TSomething>
     {
+        public static readonly PublicClass<TSomething> Default = new(default!);
+
         public PublicClass(TSomething _)
         {
         }
