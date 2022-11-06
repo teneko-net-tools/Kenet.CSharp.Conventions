@@ -2,11 +2,11 @@
 
 	<!-- These packages are gonna be inserted in the to be generated package because of _Packable=true -->
 	<ItemGroup>
-		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0">
-			<_Packable>true</_Packable>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-			<PrivateAssets>all</PrivateAssets>
-		</PackageReference>
+        <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0">
+            <_Packable>true</_Packable>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
 		<PackageReference Include="Roslynator.Analyzers" Version="4.1.2">
 			<_Packable>true</_Packable>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -25,9 +25,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<EditorConfigFilesToJoin Include="$(MSBuildProjectDirectory)/../../res/editorconfig/base.editorconfig" />
+        <EditorConfigFilesToJoin Include="$(MSBuildProjectDirectory)/../../res/editorconfig/base.editorconfig" />
+        <EditorConfigFilesToJoin Include="$(MSBuildProjectDirectory)/../../res/editorconfig/test.editorconfig" />
 	</ItemGroup>
 
-    <Import Project="../../res/Teronis.DotNet.EditorConfig.Any.targets" />
+	<Import Project="$(MSBuildProjectDirectory)/../../res/Teronis.DotNet.EditorConfig.Any.targets" />
 
 </Project>

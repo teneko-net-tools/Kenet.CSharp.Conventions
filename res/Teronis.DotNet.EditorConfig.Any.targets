@@ -1,0 +1,75 @@
+<Project>
+
+	<PropertyGroup>
+		<_GeneratedGlobalConfigFile>$(MSBuildProjectDirectory)/.globalconfig</_GeneratedGlobalConfigFile>
+		<_GeneratedEditorConfigFile>$(MSBuildProjectDirectory)/.editorconfig</_GeneratedEditorConfigFile>
+		<_GeneratedEditorConfigPropsFile>$(MSBuildProjectDirectory)/generated/$(MSBuildProjectName).props</_GeneratedEditorConfigPropsFile>
+	</PropertyGroup>
+
+	<!-- Compose the .editorconfig file from the templates -->
+	<Target Name="_ComposeEditorConfig" BeforeTargets="BeforeBuild">
+		<Error Text="There are no 'EditorConfigFilesToJoin'-items" Condition="'@(EditorConfigFilesToJoin->Count())' == '0'" />
+		<ItemGroup>
+			<EditorConfigFileContents Include="$([System.IO.File]::ReadAllText(%(EditorConfigFilesToJoin.Identity)))" />
+		</ItemGroup>
+		<WriteLinesToFile File="$(_GeneratedEditorConfigFile)" Lines="@(EditorConfigFileContents)" Overwrite="true" />
+	</Target>
+
+	<!-- Copy the common .props file -->
+	<Target Name="_GenerateGlobalConfigProps">
+		<PropertyGroup>
+			<_GlobalConfigFilePath>$(MSBuildThisFileDirectory)editorconfig/globalconfig</_GlobalConfigFilePath>
+		</PropertyGroup>
+		
+		<Copy SourceFiles="$(_GlobalConfigFilePath)" DestinationFiles="$(_GeneratedGlobalConfigFile)" UseHardlinksIfPossible="true" SkipUnchangedFiles="false" />
+	</Target>
+
+	<!-- Copy the common .props file -->
+	<Target Name="_GenerateEditorConfigProps">
+		<ItemGroup>
+			<!-- Filter pacakge reference -->
+			<_PackablePackageReference Include="@(PackageReference->WithMetadataValue('_Packable','true'))" />
+
+			<!-- Add template for each package reference -->
+			<_PackablePackageReference Include="@(_PackablePackageReference)">
+				<_Template>
+					<![CDATA[<!---->
+		<PackageReference Include="%(Identity)" Version="%(Version)">
+			<IncludeAssets>%(_PackablePackageReference.IncludeAssets)</IncludeAssets>
+			<PrivateAssets>%(_PackablePackageReference.PrivateAssets)</PrivateAssets>
+		</PackageReference>]]>
+				</_Template>
+			</_PackablePackageReference>
+		</ItemGroup>
+
+		<ReadLinesFromFile File="$(MSBuildThisFileDirectory)res/editorconfig/editorconfig.props">
+			<Output TaskParameter="Lines" ItemName="ItemsFromFile" />
+		</ReadLinesFromFile>
+
+		<PropertyGroup>
+			<_EditorConfigPropsFilePath>../../res/editorconfig/editorconfig.props</_EditorConfigPropsFilePath>
+			<_EditorConfigPropsFileContent>$([System.IO.File]::ReadAllText($(_EditorConfigPropsFilePath)))</_EditorConfigPropsFileContent>
+			<_EditorConfigPropsFileContentReplaceFrom>
+				<![CDATA[<!-- {{PlaceholderForPackageReferences}} -->]]>
+			</_EditorConfigPropsFileContentReplaceFrom>
+			<!-- Concenate package references by empty string -->
+			<_EditorConfigPropsFileContentReplaceTo>@(_PackablePackageReference->Metadata('_Template'),'')</_EditorConfigPropsFileContentReplaceTo>
+			<_EditorConfigPropsFileContent>$([System.String]::Copy('$(_EditorConfigPropsFileContent)').Replace('$(_EditorConfigPropsFileContentReplaceFrom)','$(_EditorConfigPropsFileContentReplaceTo)'))</_EditorConfigPropsFileContent>
+		</PropertyGroup>
+
+		<WriteLinesToFile Lines="$(_EditorConfigPropsFileContent)" File="$(_GeneratedEditorConfigPropsFile)" Overwrite="true" />
+	</Target>
+
+	<!-- Entry point to generate files -->
+	<Target Name="_GenerateConfigFiles" BeforeTargets="BeforeBuild" DependsOnTargets="_GenerateGlobalConfigProps;_GenerateEditorConfigProps" />
+
+	<!-- Select the MSBuild props and composed .editorconfig files to pack -->
+	<ItemGroup>
+		<None Include="$(_GeneratedGlobalConfigFile)" Pack="true" PackagePath="content/rules" />
+		<None Include="$(_GeneratedEditorConfigPropsFile)" Pack="true" PackagePath="build" />
+		<None Include="$(_GeneratedEditorConfigFile)" Pack="true" PackagePath="content/rules" />
+	</ItemGroup>
+
+	<Import Project="$(MSBuildThisFileDirectory)editorconfig/editorconfig.props"/>
+
+</Project>

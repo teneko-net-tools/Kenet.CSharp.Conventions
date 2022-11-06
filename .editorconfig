@@ -1,2 +1,4 @@
+root = true
+
 [*.{props,targets}]
 indent_size = 2

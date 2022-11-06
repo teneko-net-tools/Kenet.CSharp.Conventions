@@ -1,5 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project InitialTargets="_CopyConfigFiles">
+
+  <PropertyGroup>
+    <_ExtensionPointFile>$(MSBuildThisFileDirectory)$(MSBuildThisFileName).Extension.props</_ExtensionPointFile>
+  </PropertyGroup>
+
+  <Import Project="$(_ExtensionPointFile)" Condition="Exists('$(_ExtensionPointFile)')" />
+
   <PropertyGroup>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
@@ -10,51 +16,41 @@
     <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <LangVersion Condition="'$(LangVersion)' == ''">latest</LangVersion>
     <Nullable>enable</Nullable>
     <WarningsAsErrors>nullable</WarningsAsErrors>
-    <LangVersion Condition="'$(LangVersion)' == ''">latest</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup>
-    <!-- 
-      Workaround for changing severity of rules with Location.None - e.g. CA1014
-        - see https://github.com/dotnet/roslyn/issues/37876#issuecomment-738042719
-      Needed until those types of rules can be disabled in a Global Analyzer Config 
-        - when https://github.com/dotnet/roslyn/issues/48634 is implemented.
-      # CA1014: Mark assemblies with CLSCompliantAttribute
-    -->
-    <NoWarn>$(NoWarn);CA1014</NoWarn>
+    <!-- Because of false positive -->
+    <_SkipUpgradeNetAnalyzersNuGetWarning>true</_SkipUpgradeNetAnalyzersNuGetWarning>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <_GlobalConfigFilePathSource Condition="'$(_GlobalConfigFilePathSourceDestination)' == ''">$(MSBuildThisFileDirectory)../content/rules/.globalconfig</_GlobalConfigFilePathSource>
+    <_EditorConfigFilePathSource Condition="'$(_EditorConfigFilePathSourceDestination)' == ''">$(MSBuildThisFileDirectory)../content/rules/.editorconfig</_EditorConfigFilePathSource>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <_GlobalConfigFilePathSourceDestination Condition="'$(_GlobalConfigFilePathSourceDestination)' == ''">$(MSBuildProjectDirectory)/.globalconfig</_GlobalConfigFilePathSourceDestination>
+    <_EditorConfigFilePathSourceDestination Condition="'$(_EditorConfigFilePathSourceDestination)' == ''">$(MSBuildProjectDirectory)/.editorconfig</_EditorConfigFilePathSourceDestination>
+  </PropertyGroup>
+
+  <!-- Supported since Visual Studio 16.7: https://github.com/MicrosoftDocs/visualstudio-docs/issues/6051 -->
+  <!-- But not working ... -->
+  <!-- <ItemGroup>
+    <EditorConfigFiles Include="$(_GlobalConfigFilePathSourceDestination)" Link=".globalconfig" Condition="Exists('$(_GlobalConfigFilePathSourceDestination)')" />
+    <EditorConfigFiles Include="$(_EditorConfigFilePathSourceDestination)" Link=".editorconfig" Condition="Exists('$(_EditorConfigFilePathSourceDestination)')" />
+  </ItemGroup> -->
+
   <ItemGroup>
-    <EditorConfigFilesToCopy Include="$(MSBuildThisFileDirectory)..\content\rules\.editorconfig" />
+    <!-- These are dynamic package references populated from project -->
+    <!-- {{PlaceholderForPackageReferences}} -->
   </ItemGroup>
 
-  <Target Name="CopyEditorConfig" BeforeTargets="BeforeBuild">
-    <Message Text="Copying the .editorconfig file from '@(EditorConfigFilesToCopy)' to '$(MSBuildProjectDirectory)'"></Message>
-    <Copy
-      SourceFiles="@(EditorConfigFilesToCopy)"
-      DestinationFolder="$(MSBuildProjectDirectory)"
-      SkipUnchangedFiles="true"
-      UseHardlinksIfPossible="false" />
+  <Target Name="_CopyConfigFiles">
+    <Copy SourceFiles="$(_GlobalConfigFilePathSource)" DestinationFiles="$(_GlobalConfigFilePathSourceDestination)" SkipUnchangedFiles="true" Condition="Exists('$(_GlobalConfigFilePathSource)')" />
+    <Copy SourceFiles="$(_EditorConfigFilePathSource)" DestinationFiles="$(_EditorConfigFilePathSourceDestination)" SkipUnchangedFiles="true" Condition="Exists('$(_EditorConfigFilePathSource)')" />
   </Target>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="Roslynator.Analyzers" Version="4.0.2">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="Roslynator.CodeAnalysis.Analyzers" Version="4.0.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Roslynator.Formatting.Analyzers" Version="4.0.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
 </Project>

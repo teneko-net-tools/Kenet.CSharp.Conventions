@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<Description>Distributes an opiniated .editorconfig file. Requires Visual Studio 16.7 or greater.</Description>
+		<PackageTags>editorconfig, analyzer</PackageTags>
+
+		<!-- We don't build an executable package. 
+         We build an only-build-time package. -->
+		<SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+		<DevelopmentDependency>true</DevelopmentDependency>
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+		<IncludeSymbols>false</IncludeSymbols>
+		<NoPackageAnalysis>true</NoPackageAnalysis>
+
+		<!-- Allows files beginning with a dot -->
+		<NoDefaultExcludes>true</NoDefaultExcludes>
+	</PropertyGroup>
+
   <PropertyGroup>
     <Authors Condition="'$(Authors)' == ''">Teroneko .NET Tools</Authors>
     <Copyright Condition="'$(Copyright)' == ''">Copyright (c) 2021 Teroneko .NET Tools</Copyright>
@@ -20,4 +38,18 @@
       <PackagePath></PackagePath>
     </None>
   </ItemGroup>
+
+	<!-- Dependencies -->
+	<ItemGroup>
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" Condition="$(IsPackable)" />
+		<PackageReference Include="GitVersion.MsBuild" Version="5.7.0" Condition="$(IsPackable)">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Teronis.MSBuild.Packaging.ProjectBuildInPackage" Version="1.0.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
 </Project>
