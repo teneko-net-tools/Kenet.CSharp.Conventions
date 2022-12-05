@@ -28,15 +28,16 @@
 	<Target Name="_GenerateEditorConfigProps">
 		<ItemGroup>
 			<!-- Filter pacakge reference -->
-			<_PackablePackageReference Include="@(PackageReference->WithMetadataValue('_Packable','true'))" />
+			<_PackablePackageReference Include="@(PackageReference->WithMetadataValue('_Packable','true'))"/>
 
 			<!-- Add template for each package reference -->
 			<_PackablePackageReference Include="@(_PackablePackageReference)">
+				<!-- We have to use String.Copy, otherwise semicolon in metadatas are interpreted as delimiter -->
 				<_Template>
 					<![CDATA[<!---->
 		<PackageReference Include="%(Identity)" Version="%(Version)">
-			<IncludeAssets>%(_PackablePackageReference.IncludeAssets)</IncludeAssets>
-			<PrivateAssets>%(_PackablePackageReference.PrivateAssets)</PrivateAssets>
+			<IncludeAssets>$([System.String]::Copy('%(_PackablePackageReference.IncludeAssets)'))</IncludeAssets>
+			<PrivateAssets>$([System.String]::Copy('%(_PackablePackageReference.PrivateAssets)'))</PrivateAssets>
 		</PackageReference>]]>
 				</_Template>
 			</_PackablePackageReference>

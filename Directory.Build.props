@@ -46,12 +46,12 @@
 
 	<!-- Dependencies -->
 	<ItemGroup>
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" Condition="$(IsPackable)" />
-		<PackageReference Include="Vernuntii.Console.MSBuild" Version="0.1.0-alpha.10" Condition="$(IsPackable)">
+		<PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" Condition="$(IsPackable)" />
+		<PackageReference Include="Vernuntii.Console.MSBuild" Condition="$(IsPackable)">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Teronis.MSBuild.Packaging.ProjectBuildInPackage" Version="1.0.0">
+		<PackageReference Include="Teronis.MSBuild.Packaging.ProjectBuildInPackage">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>

@@ -1,0 +1,14 @@
+<Project>
+  <ItemGroup>
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" Condition="$(IsPackable)"/>
+		<PackageReference Update="Vernuntii.Console.MSBuild" Version="0.1.0-alpha.10" Condition="$(IsPackable)"/>
+		<PackageReference Update="Teronis.MSBuild.Packaging.ProjectBuildInPackage" Version="1.0.0"/>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0" />
+    <PackageReference Update="Microsoft.VisualStudio.Threading.Analyzers" Version="17.4.27" />
+    <PackageReference Update="Roslynator.Analyzers" Version="4.2.0" />
+    <PackageReference Update="Roslynator.CodeAnalysis.Analyzers" Version="4.2.0" />
+    <PackageReference Update="Roslynator.Formatting.Analyzers" Version="4.2.0" />
+  </ItemGroup>
+</Project>
