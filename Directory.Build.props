@@ -24,8 +24,8 @@
 	</PropertyGroup>
 
   <PropertyGroup>
-    <Authors Condition="'$(Authors)' == ''">Teroneko .NET Tools</Authors>
-    <Copyright Condition="'$(Copyright)' == ''">Copyright (c) 2021 Teroneko .NET Tools</Copyright>
+    <Authors Condition="'$(Authors)' == ''">Teneko .NET Tools authors and contributors</Authors>
+    <Copyright Condition="'$(Copyright)' == ''">Copyright (c) 2022 Teneko .NET Tools authors and contributors</Copyright>
     <Product Condition="'$(Product)' == ''">$(MSBuildProjectName)</Product>
     <PackageLicenseFile Condition="'$(PackageLicenseFile)' == ''">LICENSE</PackageLicenseFile>
     <PackageIcon Condition="'$(PackageIcon)' == ''">icon.png</PackageIcon>
