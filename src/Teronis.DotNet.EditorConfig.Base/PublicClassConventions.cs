@@ -8,11 +8,11 @@
     ///
     /// </summary>
     /// <typeparam name="TSomething"></typeparam>
-    public class PublicClass<TSomething>
+    public class PublicClassConventions<TSomething>
     {
-        public static readonly PublicClass<TSomething> Default = new(default!);
+        public static readonly PublicClassConventions<TSomething> Default = new(default!);
 
-        public PublicClass(TSomething _)
+        public PublicClassConventions(TSomething _)
         {
         }
 

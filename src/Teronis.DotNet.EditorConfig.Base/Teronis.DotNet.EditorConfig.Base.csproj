@@ -1,33 +1,43 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<!-- These packages are gonna be inserted in the to be generated package because of _Packable=true -->
-	<ItemGroup>
-		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0">
-			<_Packable>true</_Packable>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-			<PrivateAssets>all</PrivateAssets>
-		</PackageReference>
-		<PackageReference Include="Roslynator.Analyzers" Version="4.1.2">
-			<_Packable>true</_Packable>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-			<PrivateAssets>all</PrivateAssets>
-		</PackageReference>
-		<PackageReference Include="Roslynator.CodeAnalysis.Analyzers" Version="4.1.2">
-			<_Packable>true</_Packable>
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="Roslynator.Formatting.Analyzers" Version="4.1.2">
-			<_Packable>true</_Packable>
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-	</ItemGroup>
+    <!-- These packages are gonna be inserted in the to be generated package because of _Packable=true -->
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0">
+            <_Packable>true</_Packable>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.4.27">
+            <_Packable>true</_Packable>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Roslynator.Analyzers" Version="4.1.2">
+            <_Packable>true</_Packable>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Roslynator.CodeAnalysis.Analyzers" Version="4.1.2">
+            <_Packable>true</_Packable>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Roslynator.Formatting.Analyzers" Version="4.1.2">
+            <_Packable>true</_Packable>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
 
-	<ItemGroup>
-		<EditorConfigFilesToJoin Include="$(MSBuildProjectDirectory)/../../res/editorconfig/base.editorconfig" />
-	</ItemGroup>
+    <ItemGroup>
+        <EditorConfigFilesToJoin Include="$(MSBuildProjectDirectory)/../../res/editorconfig/base.editorconfig" />
+    </ItemGroup>
 
     <Import Project="../../res/Teronis.DotNet.EditorConfig.Any.targets" />
+
+    <ItemGroup>
+      <None Remove="C:\repos\Teronis.DotNet.Conventions\src\Teronis.DotNet.EditorConfig.Base/.editorconfig" />
+      <None Remove="C:\repos\Teronis.DotNet.Conventions\src\Teronis.DotNet.EditorConfig.Base/.globalconfig" />
+    </ItemGroup>
 
 </Project>

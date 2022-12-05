@@ -4,9 +4,9 @@
     ///
     /// </summary>
     /// <typeparam name="TSomething"></typeparam>
-    public class PublicClass<TSomething>
+    public class PublicClassConventions<TSomething>
     {
-        public PublicClass(TSomething _)
+        public PublicClassConventions(TSomething _)
         {
         }
 

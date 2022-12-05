@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   
+	<!-- We want to have enable analyzers depending on .NET Framework, so we can test against their conventions -->
 	<PropertyGroup>
-		<TargetFramework>netstandard2.0</TargetFramework>
+		<TargetFramework Condition="'$(SolutionName)' != 'Teronis.DotNet.Conventions'">netstandard2.0</TargetFramework>
+		<TargetFrameworks Condition="'$(SolutionName)' == 'Teronis.DotNet.Conventions'">netstandard2.0;net6.0</TargetFrameworks>
+	</PropertyGroup>
+
+	<PropertyGroup>
 		<Description>Distributes an opiniated .editorconfig file. Requires Visual Studio 16.7 or greater.</Description>
 		<PackageTags>editorconfig, analyzer</PackageTags>
 
