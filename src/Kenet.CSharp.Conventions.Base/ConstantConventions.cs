@@ -1,4 +1,4 @@
-﻿namespace Teronis.DotNet.EditorConfig.Base
+﻿namespace Kenet.CSharp.Conventions.Base
 {
     internal static class ConstantConventions
     {

@@ -33,6 +33,6 @@
     <EditorConfigFilesToJoin Include="$(MSBuildProjectDirectory)/../../res/editorconfig/base.editorconfig" />
   </ItemGroup>
 
-  <Import Project="../../res/Teronis.DotNet.EditorConfig.Any.targets" />
+  <Import Project="../../res/Kenet.CSharp.Conventions.Any.targets" />
 
 </Project>

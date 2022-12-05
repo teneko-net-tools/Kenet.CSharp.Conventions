@@ -1,4 +1,4 @@
-﻿namespace Teronis.DotNet.EditorConfig.Base
+﻿namespace Kenet.CSharp.Conventions.Base
 {
     // The disabling of such warnings is the assertion
 #pragma warning disable RCS1138 // Add summary to documentation comment.
